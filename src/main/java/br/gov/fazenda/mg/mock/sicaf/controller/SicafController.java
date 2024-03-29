@@ -1,6 +1,7 @@
 package br.gov.fazenda.mg.mock.sicaf.controller;
 
-import br.gov.fazenda.mg.mock.sicaf.controller.dto.SicafResponseDTO;
+import br.gov.fazenda.mg.mock.sicaf.dto.SicafResponseDTO;
+import br.gov.fazenda.mg.mock.sicaf.service.MockService;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.RequiredArgsConstructor;
 import lombok.SneakyThrows;
@@ -10,9 +11,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import reactor.core.publisher.Mono;
 
-import java.io.InputStream;
-
-import static java.util.Optional.ofNullable;
 import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
 
 @RestController
@@ -21,6 +19,7 @@ import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
 public class SicafController {
 
     private final ObjectMapper mapper;
+    private final MockService mockService;
 
     private static final String JSON_PATH_PATTERN = "/%s.json";
     private static final String RESPONSE_DEFAULT = "/default.json";
@@ -28,13 +27,7 @@ public class SicafController {
     @SneakyThrows
     @GetMapping(produces = APPLICATION_JSON_VALUE)
     public Mono<SicafResponseDTO> obterStatusVeiculoSicaf(@RequestParam Long renavam) {
-        final var jsonFileInputStream = ofNullable(getInputStreamFile(JSON_PATH_PATTERN.formatted(renavam)))
-                .orElse(getInputStreamFile(RESPONSE_DEFAULT));
-        return Mono.just(this.mapper.readValue(jsonFileInputStream, SicafResponseDTO.class));
-    }
-
-    private InputStream getInputStreamFile(String file) {
-        return this.getClass().getResourceAsStream(file);
+        return Mono.just(this.mapper.readValue(this.mockService.recuperarRetorno(renavam), SicafResponseDTO.class));
     }
 
 }
