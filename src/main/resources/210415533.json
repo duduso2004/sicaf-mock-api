@@ -1,0 +1,29 @@
+{
+  "status": [
+    {
+      "ano_exercicio": 2020,
+      "codigo_status": 5,
+      "descricao": "VEICULO_NAO_TRIBUTAVEL"
+    },
+    {
+      "ano_exercicio": 2021,
+      "codigo_status": 5,
+      "descricao": "VEICULO_NAO_TRIBUTAVEL"
+    },
+    {
+      "ano_exercicio": 2022,
+      "codigo_status": 5,
+      "descricao": "VEICULO_NAO_TRIBUTAVEL"
+    },
+    {
+      "ano_exercicio": 2023,
+      "codigo_status": 5,
+      "descricao": "VEICULO_NAO_TRIBUTAVEL"
+    },
+    {
+      "ano_exercicio": 2024,
+      "codigo_status": 5,
+      "descricao": "VEICULO_NAO_TRIBUTAVEL"
+    }
+  ]
+}
