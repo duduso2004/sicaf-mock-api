@@ -21,11 +21,12 @@ public class MockService {
     private static final String RESPONSE_DEFAULT = "/default.json";
 
     private final ObjectMapper mapper;
+    private SicafResponseDTO responseDefault;
     private final Map<Long, SicafResponseDTO> mapaRetornos = new HashMap<>();
 
     @SneakyThrows
     public void carregarMapaRetornos() {
-        this.mapaRetornos.put(0L, this.mapper.readValue(getFileUrl(RESPONSE_DEFAULT), SicafResponseDTO.class));
+        this.responseDefault = this.mapper.readValue(getFileUrl(RESPONSE_DEFAULT), SicafResponseDTO.class);
         this.mapaRetornos.put(210415533L, this.mapper.readValue(getFileUrl(JSON_PATH_PATTERN.formatted(210415533L)), SicafResponseDTO.class));
         this.mapaRetornos.put(239900049L, this.mapper.readValue(getFileUrl(JSON_PATH_PATTERN.formatted(239900049L)), SicafResponseDTO.class));
         this.mapaRetornos.put(241755352L, this.mapper.readValue(getFileUrl(JSON_PATH_PATTERN.formatted(241755352L)), SicafResponseDTO.class));
@@ -36,8 +37,7 @@ public class MockService {
     }
 
     public Mono<SicafResponseDTO> recuperarRetorno(Long renavam) {
-        final var responseDefault = this.mapaRetornos.get(0L);
-        return Mono.just(ofNullable(this.mapaRetornos.get(renavam)).orElse(responseDefault));
+        return Mono.just(ofNullable(this.mapaRetornos.get(renavam)).orElse(this.responseDefault));
     }
 
     private URL getFileUrl(String file) {
