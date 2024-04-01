@@ -1,7 +1,7 @@
 package br.gov.fazenda.mg.mock.sicaf.controller;
 
 import br.gov.fazenda.mg.mock.sicaf.dto.SicafResponseDTO;
-import br.gov.fazenda.mg.mock.sicaf.service.MockService;
+import br.gov.fazenda.mg.mock.sicaf.service.SicafMockService;
 import lombok.RequiredArgsConstructor;
 import lombok.SneakyThrows;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -17,12 +17,12 @@ import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
 @RequestMapping("/obterStatusVeiculoSicaf")
 public class SicafController {
 
-    private final MockService mockService;
+    private final SicafMockService sicafMockService;
 
     @SneakyThrows
     @GetMapping(produces = APPLICATION_JSON_VALUE)
     public Mono<SicafResponseDTO> obterStatusVeiculoSicaf(@RequestParam Long renavam) {
-        return this.mockService.recuperarRetorno(renavam);
+        return this.sicafMockService.recuperarMock(renavam);
     }
 
 }
