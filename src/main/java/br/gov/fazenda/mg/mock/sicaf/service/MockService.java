@@ -5,6 +5,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.RequiredArgsConstructor;
 import lombok.SneakyThrows;
 import org.springframework.stereotype.Service;
+import reactor.core.publisher.Mono;
 
 import java.net.URL;
 import java.util.HashMap;
@@ -34,9 +35,9 @@ public class MockService {
         this.mapaRetornos.put(1365265193L, this.mapper.readValue(getFileUrl(JSON_PATH_PATTERN.formatted(1365265193L)), SicafResponseDTO.class));
     }
 
-    public SicafResponseDTO recuperarRetorno(Long renavam) {
+    public Mono<SicafResponseDTO> recuperarRetorno(Long renavam) {
         final var responseDefault = this.mapaRetornos.get(0L);
-        return ofNullable(this.mapaRetornos.get(renavam)).orElse(responseDefault);
+        return Mono.just(ofNullable(this.mapaRetornos.get(renavam)).orElse(responseDefault));
     }
 
     private URL getFileUrl(String file) {

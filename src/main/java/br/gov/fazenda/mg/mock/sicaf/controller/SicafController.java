@@ -22,7 +22,7 @@ public class SicafController {
     @SneakyThrows
     @GetMapping(produces = APPLICATION_JSON_VALUE)
     public Mono<SicafResponseDTO> obterStatusVeiculoSicaf(@RequestParam Long renavam) {
-        return Mono.just(this.mockService.recuperarRetorno(renavam));
+        return this.mockService.recuperarRetorno(renavam);
     }
 
 }
